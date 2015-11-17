@@ -2,16 +2,16 @@ import java.util.Scanner;
 import java.util.regex.*;
 
 public class Calculate {
-    private static final String REGEXP = "\\d+ (\\+|-|\\*|/|pow) \\d+";
-    private static final String EXITCODE = "Exit";
+    private final String REGEXP = "\\d+ (\\+|-|\\*|/|pow) \\d+";
+    private final  String EXITCODE = "Exit";
 
-    private static boolean checkExp(String exp) throws PatternSyntaxException {
+    private boolean checkExp(String exp) throws PatternSyntaxException {
         Pattern p = Pattern.compile(REGEXP);
         Matcher m = p.matcher(exp);
         return m.matches();
     }
 
-    private static double doCalculate(String exp) {
+    private double doCalculate(String exp) {
         double result = 0;
 
         try {
@@ -46,23 +46,27 @@ public class Calculate {
 
     public static void main(String[] args) {
         String exp = "";
+
         System.out.println("Calculate...");
         System.out.println("Type 'Exit' to stop the programm.");
+
         Scanner sc = new Scanner(System.in);
+
+        Calculate calc = new Calculate();
 
         for ( ; ; ) {
             System.out.println("Please, enter an expression in this format: a + b. Available operations are: +, -, *, /, pow.");
             exp = sc.nextLine();
-            if (exp.equalsIgnoreCase(EXITCODE)) {
+            if (exp.equalsIgnoreCase(calc.EXITCODE)) {
                 break;
             }
             try {
-                if (!checkExp(exp)) {
+                if (!calc.checkExp(exp)) {
                     System.out.println("Invalid expression format.");
                     continue;
                 }
                 else {
-                    double result = doCalculate(exp);
+                    double result = calc.doCalculate(exp);
                     System.out.println("Result of expression: " + result);
                 }
             }
