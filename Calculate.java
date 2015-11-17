@@ -3,7 +3,7 @@ import java.util.regex.*;
 
 public class Calculate {
     private final String REGEXP = "\\d+ (\\+|-|\\*|/|pow) \\d+";
-    private final  String EXITCODE = "Exit";
+    private final String EXITCODE = "Exit";
 
     private boolean checkExp(String exp) throws PatternSyntaxException {
         Pattern p = Pattern.compile(REGEXP);
