@@ -2,8 +2,9 @@ import java.util.Scanner;
 import java.util.regex.*;
 
 public class InteractRunner {
-    private static final String REGEXP = "\\d+ (\\+|-|\\*|/|pow) \\d+";
-    private static final String EXITCODE = "Exit";
+    private final String REGEXP = "\\-?\\d+(\\.\\d{0,})? (\\+|-|\\*|/|pow) \\-?\\d+(\\.\\d{0,})?";
+    private final String EXITCODE = "Exit";
+    private final String USECURRRESULTCODE = "Yes";
 
     /**
      * Проверяет введенное пользователем выражение на соответствие шаблону
@@ -17,10 +18,12 @@ public class InteractRunner {
         return m.matches();
     }
 
-    private double doCalculate(String exp) {
+    /**
+     * Получем операнды и операцию, вычисляем выражение
+     * @param exp выражение
+     */
+    private void doCalculate(String exp, Calculator calc) {
         double result = 0;
-
-        Calculator calc = new Calculator();
 
         try {
             double operandFirst = Double.parseDouble(exp.substring(0, exp.indexOf(" ")));
@@ -49,23 +52,30 @@ public class InteractRunner {
         catch (NullPointerException | NumberFormatException | IndexOutOfBoundsException  exc) {
             System.out.println(exc.getMessage());
         }
-
-        return result;
     }
     public static void main(String[] args) {
-        String exp = "";
-        double tmpResult = 0;
+        String exp = "", expTmp = "";
+        double result = 0;
+        boolean usePrevOperResult = false;
 
         System.out.println("Calculate...");
         System.out.println("Type 'Exit' to stop the programm.");
+
+        Calculator calc = new Calculator();
 
         try (Scanner sc = new Scanner(System.in)) {
             InteractRunner ir = new InteractRunner();
 
             for ( ; ; ) {
-                System.out.println("Please, enter an expression in this format: a + b. Available operations are: +, -, *, /, pow.");
-                exp = sc.nextLine();
-                if (exp.equalsIgnoreCase(EXITCODE)) {
+                if (usePrevOperResult) {
+                    System.out.println("Please, enter an expression without leading space in this format: + b to use previous operation result. Available operations are: +, -, *, /, pow:");
+                }
+                else {
+                    System.out.println("Please, enter an expression in this format: a + b. Available operations are: +, -, *, /, pow:");
+                }
+                expTmp = sc.nextLine();
+                exp = (usePrevOperResult) ? (result + " " + expTmp) : expTmp;
+                if (expTmp.equalsIgnoreCase(ir.EXITCODE)) {
                     break;
                 }
 
@@ -74,8 +84,15 @@ public class InteractRunner {
                     continue;
                 }
                 else {
-                    double result = ir.doCalculate(exp);
+                    ir.doCalculate(exp, calc);
+                    result = calc.getResult();
+                    calc.cleanResult();
                     System.out.println("Result of expression: " + result);
+
+                    System.out.println("Do you want to use current result in next expression? (yes/no):");
+                    expTmp = sc.nextLine();
+
+                    usePrevOperResult = (expTmp.equalsIgnoreCase(ir.USECURRRESULTCODE)) ? true : false;
                 }
             }
         }
