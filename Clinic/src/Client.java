@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 /**
  * Класс, описывающий клиента ветеринарной клиники
  */
@@ -5,21 +9,20 @@ public class Client {
     /**
      * Идентификатор клиента
      */
-
     private String id;
+
     /**
      *Домашний питомец клиента
      */
-    private Pet pet;
+    private final List<Pet> pets;
 
     /**
-     * КОнструктор класса
+     * Конструктор класса
      * @param id Идентификатор клиента
-     * @param pet Домашний питомец клиента
      */
-    public Client(String id, Pet pet) {
+    public Client(String id) {
         this.id = id;
-        this.pet = pet;
+        this.pets = new <Pet>ArrayList();
     }
 
     /**
@@ -36,24 +39,58 @@ public class Client {
 
     /**
      * Удаляет домашнего питомца у клиента
+     * @param name кличка удаляемого питомца
      */
-    public void deletePet() {
-        this.pet = null;
+    public void deletePet(final String name) {
+        for (int i = 0; i < pets.size(); i++) {
+            if (name.equalsIgnoreCase(pets.get(i).getName())) {
+                pets.remove(i);
+            }
+        }
     }
 
     /**
      * Возвращает домашнего питомца клиента
-     * @return Pet
+     * @param name кличка питомца
+     * @return Pet найденный питомец
      */
-    public Pet getPet() {
-        return pet;
+    public Pet getPet(final String name) {
+        Pet foundPet = null;
+        for (int i = 0; i < pets.size(); i++) {
+            if (name.equalsIgnoreCase(pets.get(i).getName())) {
+                foundPet = pets.get(i);
+                break;
+            }
+        }
+        return foundPet;
+    }
+
+    /**
+     * Проверяе, что питомец с переданной кличкой уже есть у клиента
+     * @param name проверяемая кличка
+     * @return boolean истина или ложь
+     */
+    private boolean canAddPet(final String name) {
+        boolean canAdd = true;
+        for (int i = 0; i < pets.size(); i++) {
+            if (name.equalsIgnoreCase(pets.get(i).getName())) {
+                canAdd = false;
+                break;
+            }
+        }
+        return canAdd;
     }
 
     /**
      * Добавляет домашнего питомца клиенту
      * @param pet Домашний питомец
      */
-    public void addPet(Pet pet) {
-        this.pet = pet;
+    public void addPet(Pet pet) throws DuplicateNameException {
+        if (canAddPet(pet.getName())) {
+            pets.add(pet);
+        }
+        else {
+            throw new DuplicateNameException("Питомец с указанной кличкой уже есть у клиента.");
+        }
     }
 }

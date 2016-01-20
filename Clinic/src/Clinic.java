@@ -24,7 +24,7 @@ public class Clinic {
      * @param client Клиент
      */
     public void addClient(final Client client) {
-        this.clients.add(client);
+        clients.add(client);
     }
 
 

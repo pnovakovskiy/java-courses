@@ -26,6 +26,22 @@ public class InteractRunner {
     }
 
     /**
+     * Возвращает введенное пользователем значение
+     * @return
+     */
+    private String getUserWordAnswer() {
+        String answer = "";
+        try {
+            answer = scanner.nextLine();
+        }
+        catch (NoSuchElementException exc) {
+            answer = "";
+            System.out.println(exc.getMessage());
+        }
+        return answer;
+    }
+
+    /**
      * Конструктор класса
      */
     public InteractRunner() {
@@ -34,6 +50,9 @@ public class InteractRunner {
         runExec();
     }
 
+    /**
+     * Запускает работу класса, иммитирующего клинику
+     */
     private void runExec() {
         int userChoice = 0;
         while (userChoice != 9) {
@@ -55,21 +74,38 @@ public class InteractRunner {
         }
     }
 
+    /**
+     * Добавляет нового клиента
+     */
     private void addNewClient() {
         String id = "";
-        System.out.println("Введите имя клиента:");
+        Client client = null;
+
         while (id.equals("")) {
-            try {
-                id = scanner.nextLine();
-            }
-            catch (NoSuchElementException exc) {
-                id = "";
-                System.out.println(exc.getMessage());
+            System.out.println("Введите имя клиента:");
+            id = getUserWordAnswer();
+        }
+        client = new Client(id);
+        clinic.addClient(client);
+        System.out.println("Клиент добавлен.");
+
+        System.out.println("Добавить питомца клиенту? (да/нет)");
+        if (getUserWordAnswer().equalsIgnoreCase("да")) {
+            boolean addResult = false;
+            while (!addResult) {
+                Pet pet  = addNewPet();
+                try {
+                    client.addPet(pet);
+                    addResult = true;
+                    System.out.println("Питомец добавлен.");
+                }
+                catch (DuplicateNameException exc) {
+                    addResult = false;
+                    System.out.println(exc.getMessage());
+                }
             }
         }
-        Pet pet  = addNewPet();
-        clinic.addClient(new Client(id, pet));
-        System.out.println("Клиент добавлен.");
+
     }
 
     /**
