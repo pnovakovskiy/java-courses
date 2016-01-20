@@ -30,6 +30,7 @@ public class InteractRunner {
      */
     public InteractRunner() {
         scanner = new Scanner(System.in);
+        clinic = new Clinic();
         runExec();
     }
 
