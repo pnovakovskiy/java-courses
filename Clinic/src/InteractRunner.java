@@ -154,7 +154,7 @@ public class InteractRunner {
                 System.out.println("Питомец добавлен.");
             }
             catch (DuplicateNameException exc) {
-                System.out.println(exc.getMessage());
+                System.out.println("Ошибка добавления: " + exc.getMessage());
             }
         }
     }
