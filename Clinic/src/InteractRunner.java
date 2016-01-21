@@ -27,7 +27,8 @@ public class InteractRunner {
 
     /**
      * Возвращает введенное пользователем значение
-     * @return
+     * @param question String сообщение/вопрос пользователю
+     * @return String ответ пользователя
      */
     private String getUserWordAnswer(final String question) {
         System.out.println(question);
