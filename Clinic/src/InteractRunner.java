@@ -13,6 +13,7 @@ public class InteractRunner {
      * Печатает главное меню
      */
     private void printMainMenu() {
+        System.out.println();
         System.out.println("Выберите действие:");
         System.out.println("1. Добавить клиента");
         System.out.println("2. Добавить питомца клиенту");
@@ -68,6 +69,9 @@ public class InteractRunner {
                     case 1:
                         addNewClient();
                         break;
+                    case 2:
+                        addNewPetToClient();
+                        break;
                 }
             }
             catch (InputMismatchException exc) {
@@ -115,15 +119,12 @@ public class InteractRunner {
      * @return Pet домашний питомец
      */
     private Pet addNewPet() {
-        System.out.println("Какое домашнее животное необходимо добавить? (СОБАКА или КОШКА):");
-        String petKind = scanner.nextLine();
+        String petKind = getUserWordAnswer("Какое домашнее животное необходимо добавить? (СОБАКА или КОШКА):");
         while (!petKind.equalsIgnoreCase("собака") && !petKind.equalsIgnoreCase("кошка")) {
-            System.out.println("Неизвестное домашнее животное. Повторите попытку.");
-            petKind = scanner.nextLine();
+            petKind = getUserWordAnswer("Неизвестное домашнее животное. Повторите попытку.");
         }
 
-        System.out.println("Введите кличку домашнего животного:");
-        String petName = scanner.nextLine();
+        String petName = getUserWordAnswer("Введите кличку домашнего животного:");
 
         Pet pet = null;
         if (petKind.equalsIgnoreCase("собака")) {
@@ -136,7 +137,27 @@ public class InteractRunner {
         return pet;
     }
 
+    /**
+     * Добавляет нового питомца к существующему клиенту
+     */
+    private void addNewPetToClient() {
+        String clientName = getUserWordAnswer("Введите имя клиента:");
+        Client client = clinic.getClient(clientName);
 
+        if (client == null) {
+            System.out.println("Клиент с таким именем не найден.");
+        }
+        else {
+            Pet pet = addNewPet();
+            try {
+                client.addPet(pet);
+                System.out.println("Питомец добавлен.");
+            }
+            catch (DuplicateNameException exc) {
+                System.out.println(exc.getMessage());
+            }
+        }
+    }
 
     public static void main(String[] args) {
         InteractRunner ir = new InteractRunner();

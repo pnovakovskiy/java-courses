@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * Класс, описывающий клинику
@@ -27,30 +26,19 @@ public class Clinic {
         clients.add(client);
     }
 
-
-
-    //private void doAction(final byte actionNamber) {
-    //    switch (actionNamber) {
-    //        case 1:
-    //            addClient(new Client(++clientsCount, ));
-    //    }
-    //}
-
-    /*
-    public static void main(String[] args) {
-        //выбранное дествие
-        byte actionNumber = 0;
-
-        Clinic clinic = new Clinic();
-
-        try (Scanner sc = new Scanner(System.in)) {
-
-            //пока не выберут "Выйти из программы"
-            do {
-                clinic.printMainMenu();
-                actionNumber = sc.nextByte();
-            } while (actionNumber != 9);
+    /**
+     * Поиск клиента по имени
+     * @param name имя
+     * @return клиент
+     */
+    public Client getClient(final String name) {
+        Client client = null;
+        for (int i = 0; i < clients.size(); i++) {
+            if (name.equalsIgnoreCase(clients.get(i).getID())) {
+                client = clients.get(i);
+                break;
+            }
         }
+        return client;
     }
-    */
 }
