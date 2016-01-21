@@ -29,7 +29,9 @@ public class InteractRunner {
      * Возвращает введенное пользователем значение
      * @return
      */
-    private String getUserWordAnswer() {
+    private String getUserWordAnswer(final String question) {
+        System.out.println(question);
+
         String answer = "";
         try {
             answer = scanner.nextLine();
@@ -59,6 +61,7 @@ public class InteractRunner {
             printMainMenu();
             try {
                 userChoice = scanner.nextInt();
+                scanner.nextLine();
 
                 switch (userChoice) {
                     case 1:
@@ -78,19 +81,17 @@ public class InteractRunner {
      * Добавляет нового клиента
      */
     private void addNewClient() {
-        String id = "";
+        String id;
         Client client = null;
 
-        while (id.equals("")) {
-            System.out.println("Введите имя клиента:");
-            id = getUserWordAnswer();
-        }
+        do {
+            id = getUserWordAnswer("Введите имя клиента:");
+        } while (id.equals(""));
         client = new Client(id);
         clinic.addClient(client);
         System.out.println("Клиент добавлен.");
 
-        System.out.println("Добавить питомца клиенту? (да/нет)");
-        if (getUserWordAnswer().equalsIgnoreCase("да")) {
+        if (getUserWordAnswer("Добавить питомца клиенту? (да/нет)").equalsIgnoreCase("да")) {
             boolean addResult = false;
             while (!addResult) {
                 Pet pet  = addNewPet();
