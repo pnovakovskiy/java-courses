@@ -1,4 +1,5 @@
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -67,10 +68,28 @@ public class InteractRunner {
 
                 switch (userChoice) {
                     case 1:
-                        addNewClient();
+                        addNewClientExec();
                         break;
                     case 2:
-                        addNewPetToClient();
+                        addNewPetToClientExec();
+                        break;
+                    case 3:
+                        findClientExec();
+                        break;
+                    case 4:
+                        findPetExec();
+                        break;
+                    case 5:
+                        changeClientNameExec();
+                        break;
+                    case 6:
+                        changePetNameExec();
+                        break;
+                    case 7:
+                        deleteClientExec();
+                        break;
+                    case 8:
+                        deletePetExec();
                         break;
                 }
             }
@@ -85,7 +104,7 @@ public class InteractRunner {
     /**
      * Добавляет нового клиента
      */
-    private void addNewClient() {
+    private void addNewClientExec() {
         String id;
         Client client = null;
 
@@ -140,9 +159,8 @@ public class InteractRunner {
     /**
      * Добавляет нового питомца к существующему клиенту
      */
-    private void addNewPetToClient() {
-        String clientName = getUserWordAnswer("Введите имя клиента:");
-        Client client = clinic.getClient(clientName);
+    private void addNewPetToClientExec() {
+        Client client = findClient();
 
         if (client == null) {
             System.out.println("Клиент с таким именем не найден.");
@@ -155,6 +173,138 @@ public class InteractRunner {
             }
             catch (DuplicateNameException exc) {
                 System.out.println("Ошибка добавления: " + exc.getMessage());
+            }
+        }
+    }
+
+    /**
+     * Ищет клиента по имени
+     * @return Client клиент клиники
+     */
+    private Client findClient() {
+        String clientName = getUserWordAnswer("Введите имя клиента:");
+        Client client = clinic.getClient(clientName);
+        return client;
+    }
+
+    /**
+     * Запускает поиск клиента
+     */
+    private void findClientExec() {
+        Client client = findClient();
+
+        if (client == null) {
+            System.out.println("Клиент с таким именем не найден.");
+        }
+        else {
+            System.out.println("Клиент " + client.getID() + " найден.");
+            List<Pet> pets = client.getPets();
+            for (int i = 0; i < pets.size(); i++) {
+                System.out.println(pets.get(i).toString() + " - " + pets.get(i).getName());
+            }
+            System.out.println("Поиск окончен.");
+        }
+    }
+
+    /**
+     * Запускает поиск питомца
+     */
+    private void findPetExec() {
+        String petName = getUserWordAnswer("Введите кличку питомца:");
+        List<Client> clients = clinic.getClients();
+
+        List<Pet> pets;
+        for (Client client: clients) {
+            pets = client.getPets();
+            for (Pet pet: pets) {
+                if (pet.getName().equalsIgnoreCase(petName)) {
+                    System.out.println("Клиент: " + client.getID() + ", " + pet.toString() + " - " + pet.getName());
+                }
+            }
+        }
+        System.out.println("Поиск окончен.");
+    }
+
+    /**
+     * Меняет имя клиента
+     */
+    private void changeClientNameExec() {
+        Client client = findClient();
+
+        if (client == null) {
+            System.out.println("Клиент с таким именем не найден.");
+        }
+        else {
+            String newName;
+            do {
+                newName = getUserWordAnswer("Введите новое имя клиента:");
+            } while (newName.equals(""));
+            client.setId(newName);
+            System.out.println("Имя клиента изменено.");
+        }
+    }
+
+    /**
+     * Меняет кличку питомцу
+     */
+    private void changePetNameExec() {
+        Client client = findClient();
+
+        if (client == null) {
+            System.out.println("Клиент с таким именем не найден.");
+        }
+        else {
+            String petName = getUserWordAnswer("Введите кличку питомца:");
+
+            Pet pet = client.getPet(petName);
+            if (pet == null) {
+                System.out.println("Питомец с такой кличкой не найден.");
+            }
+            else {
+                String newName;
+                do {
+                    newName = getUserWordAnswer("Введите новую кличку питомца:");
+                } while (newName.equals(""));
+                pet.setName(newName);
+                System.out.println("Кличка питомца изменена.");
+            }
+        }
+    }
+
+    /**
+     * Удаляет клиента
+     */
+    private void deleteClientExec() {
+        Client client  = findClient();
+
+        if (client == null) {
+            System.out.println("Клиент с таким именем не найден.");
+        }
+        else {
+            clinic.deleteClient(client);
+            System.out.println("Клиент удален.");
+        }
+    }
+
+    /**
+     * Удаляет питомца
+     */
+    private void deletePetExec() {
+        Client client = findClient();
+
+        if (client == null) {
+            System.out.println("Клиент с таким именем не найден.");
+        }
+        else {
+            String petName = getUserWordAnswer("Введите кличку питомца:");
+
+            Pet pet = client.getPet(petName);
+            if (pet == null) {
+                System.out.println("Питомец с такой кличкой не найден.");
+            }
+            else {
+                client.deletePet(petName);
+                System.out.println("Питомец удален.");
             }
         }
     }

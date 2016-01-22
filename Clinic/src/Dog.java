@@ -29,4 +29,9 @@ public class Dog implements Pet {
     public void setName(final String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "Собака";
+    }
 }

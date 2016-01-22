@@ -5,11 +5,14 @@ import java.util.List;
  * Класс, описывающий клинику
  */
 public class Clinic {
-    private int clientsCount = 0;
     /**
      * Список клиентов
      */
     private final List<Client> clients;
+
+    public List<Client> getClients() {
+        return clients;
+    }
 
     /**
      * Конструктор класса
@@ -24,6 +27,14 @@ public class Clinic {
      */
     public void addClient(final Client client) {
         clients.add(client);
+    }
+
+    /**
+     * Удалить клиента
+     * @param client Клиент
+     */
+    public void deleteClient(final Client client) {
+        clients.remove(client);
     }
 
     /**

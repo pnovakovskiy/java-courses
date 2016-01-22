@@ -29,4 +29,9 @@ public class Cat implements Pet {
     public void setName(final String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "Кошка/кот";
+    }
 }

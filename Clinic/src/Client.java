@@ -15,6 +15,10 @@ public class Client {
      */
     private final List<Pet> pets;
 
+    public List<Pet> getPets() {
+        return pets;
+    }
+
     /**
      * Конструктор класса
      * @param id Идентификатор клиента
