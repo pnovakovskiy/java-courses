@@ -35,7 +35,7 @@ public class InteractRunner {
     private String getUserWordAnswer(final String question) {
         System.out.println(question);
 
-        String answer = "";
+        String answer;
         try {
             answer = scanner.nextLine();
         }
@@ -106,7 +106,7 @@ public class InteractRunner {
      */
     private void addNewClientExec() {
         String id;
-        Client client = null;
+        Client client;
 
         do {
             id = getUserWordAnswer("Введите имя клиента:");
@@ -183,8 +183,7 @@ public class InteractRunner {
      */
     private Client findClient() {
         String clientName = getUserWordAnswer("Введите имя клиента:");
-        Client client = clinic.getClient(clientName);
-        return client;
+        return clinic.getClient(clientName);
     }
 
     /**
@@ -199,9 +198,10 @@ public class InteractRunner {
         else {
             System.out.println("Клиент " + client.getID() + " найден.");
             List<Pet> pets = client.getPets();
-            for (int i = 0; i < pets.size(); i++) {
-                System.out.println(pets.get(i).toString() + " - " + pets.get(i).getName());
+            for (Pet pet: pets) {
+                System.out.println(pet.toString() + " - " + pet.getName());
             }
+
             System.out.println("Поиск окончен.");
         }
     }
@@ -211,12 +211,9 @@ public class InteractRunner {
      */
     private void findPetExec() {
         String petName = getUserWordAnswer("Введите кличку питомца:");
-        List<Client> clients = clinic.getClients();
 
-        List<Pet> pets;
-        for (Client client: clients) {
-            pets = client.getPets();
-            for (Pet pet: pets) {
+        for (Client client: clinic.getClients()) {
+            for (Pet pet: client.getPets()) {
                 if (pet.getName().equalsIgnoreCase(petName)) {
                     System.out.println("Клиент: " + client.getID() + ", " + pet.toString() + " - " + pet.getName());
                 }
@@ -310,6 +307,6 @@ public class InteractRunner {
     }
 
     public static void main(String[] args) {
-        InteractRunner ir = new InteractRunner();
+        new InteractRunner();
     }
 }
