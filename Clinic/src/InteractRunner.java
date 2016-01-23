@@ -197,8 +197,7 @@ public class InteractRunner {
         }
         else {
             System.out.println("Клиент " + client.getID() + " найден.");
-            List<Pet> pets = client.getPets();
-            for (Pet pet: pets) {
+            for (Pet pet: client.getPets()) {
                 System.out.println(pet.toString() + " - " + pet.getName());
             }
 
