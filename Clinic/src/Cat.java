@@ -15,10 +15,10 @@ public class Cat implements Pet {
         this.name = name;
     }
 
-    @Override
-    public void makeSound(){
-        System.out.println("Мяу");
-    }
+    //@Override
+    //public void makeSound(){
+    //    System.out.println("Мяу");
+    //}
 
     @Override
     public String getName() {

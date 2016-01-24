@@ -59,9 +59,9 @@ public class Client {
      */
     public Pet getPet(final String name) {
         Pet foundPet = null;
-        for (int i = 0; i < pets.size(); i++) {
-            if (name.equalsIgnoreCase(pets.get(i).getName())) {
-                foundPet = pets.get(i);
+        for (Pet pet: pets) {
+            if (name.equalsIgnoreCase(pet.getName())) {
+                foundPet = pet;
                 break;
             }
         }
@@ -75,8 +75,8 @@ public class Client {
      */
     private boolean canAddPet(final String name) {
         boolean canAdd = true;
-        for (int i = 0; i < pets.size(); i++) {
-            if (name.equalsIgnoreCase(pets.get(i).getName())) {
+        for (Pet pet: pets) {
+            if (name.equalsIgnoreCase(pet.getName())) {
                 canAdd = false;
                 break;
             }

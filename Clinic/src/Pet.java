@@ -5,7 +5,7 @@ public interface Pet {
     /**
      * Издать звук
      */
-    void makeSound();
+    //void makeSound();
 
     /**
      * Получить имя питомца

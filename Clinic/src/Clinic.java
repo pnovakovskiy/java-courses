@@ -44,9 +44,9 @@ public class Clinic {
      */
     public Client getClient(final String name) {
         Client client = null;
-        for (int i = 0; i < clients.size(); i++) {
-            if (name.equalsIgnoreCase(clients.get(i).getID())) {
-                client = clients.get(i);
+        for (Client cl: clients) {
+            if (name.equalsIgnoreCase(cl.getID())) {
+                client = cl;
                 break;
             }
         }
