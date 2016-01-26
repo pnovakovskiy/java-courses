@@ -20,17 +20,14 @@ public class Cat implements Pet {
     //    System.out.println("Мяу");
     //}
 
-    @Override
     public String getName() {
         return this.name;
     }
 
-    @Override
     public void setName(final String name) {
         this.name = name;
     }
 
-    @Override
     public String toString() {
         return "Кошка/кот";
     }
