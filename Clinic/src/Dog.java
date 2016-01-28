@@ -15,11 +15,6 @@ public class Dog implements Pet {
         this.name = name;
     }
 
-    //@Override
-    //public void makeSound(){
-    //    System.out.println("Гав");
-    //}
-
     public String getName() {
         return this.name;
     }

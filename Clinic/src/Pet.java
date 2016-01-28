@@ -3,11 +3,6 @@
  */
 public interface Pet {
     /**
-     * Издать звук
-     */
-    //void makeSound();
-
-    /**
      * Получить имя питомца
      */
     String getName();

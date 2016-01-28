@@ -18,7 +18,7 @@ public class Clinic {
      * Конструктор класса
      */
     public Clinic() {
-        clients = new <Client>ArrayList();
+        clients = new ArrayList<>();
     }
 
     /**

@@ -113,23 +113,6 @@ public class InteractRunner {
         client = new Client(id);
         clinic.addClient(client);
         System.out.println("Клиент добавлен.");
-
-        if (getUserWordAnswer("Добавить питомца клиенту? (да/нет)").equalsIgnoreCase("да")) {
-            boolean addResult = false;
-            while (!addResult) {
-                Pet pet  = addNewPet();
-                try {
-                    client.addPet(pet);
-                    addResult = true;
-                    System.out.println("Питомец добавлен.");
-                }
-                catch (DuplicateNameException exc) {
-                    addResult = false;
-                    System.out.println(exc.getMessage());
-                }
-            }
-        }
-
     }
 
     /**

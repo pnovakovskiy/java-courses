@@ -25,7 +25,7 @@ public class Client {
      */
     public Client(String id) {
         this.id = id;
-        this.pets = new <Pet>ArrayList();
+        this.pets = new ArrayList<>();
     }
 
     /**
