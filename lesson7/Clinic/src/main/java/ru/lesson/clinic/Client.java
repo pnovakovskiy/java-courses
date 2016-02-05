@@ -75,7 +75,7 @@ public class Client {
      * @param name проверяемая кличка
      * @return boolean истина или ложь
      */
-    private boolean canAddPet(final String name) {
+    public boolean canAddPet(final String name) {
         boolean canAdd = true;
         for (Pet pet: pets) {
             if (name.equalsIgnoreCase(pet.getName())) {
