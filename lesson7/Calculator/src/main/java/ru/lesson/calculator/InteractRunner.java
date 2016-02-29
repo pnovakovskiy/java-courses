@@ -6,7 +6,7 @@ import java.util.regex.*;
 public class InteractRunner {
     private ExpressionChecker expressionChecker;
 
-    private Scanner scanner;
+    private final Scanner scanner;
 
     private Calculator calculator;
 
@@ -29,11 +29,11 @@ public class InteractRunner {
     /**
      * Конструктор класса
      */
-    public InteractRunner() {
+    public InteractRunner(final Scanner scanner, final Calculator calculator) {
         expressionChecker = new ExpressionChecker();
         expressionChecker.setTemplate(REG_EXP);
-        scanner = new Scanner(System.in);
-        calculator = new Calculator();
+        this.scanner = scanner;
+        this.calculator = calculator;
         System.out.println("Type 'Exit' to stop the program.");
         System.out.println("Available operations are: +, -, *, /, pow.");
         runExec();
@@ -43,7 +43,7 @@ public class InteractRunner {
      * Получем операнды и операцию, вычисляем выражение
      * @param exp выражение
      */
-    private void doCalculate(final String exp) {
+    public void doCalculate(final String exp) {
         ExpressionParser expressionParser = new ExpressionParser(exp);
         expressionParser.parse();
 
@@ -102,6 +102,6 @@ public class InteractRunner {
     }
 
     public static void main(String[] args) {
-        new InteractRunner();
+        new InteractRunner(new Scanner(System.in), new Calculator());
     }
 }
