@@ -75,30 +75,29 @@ public class InteractRunner {
         boolean usePrevResult = false;
         double result = 0;
 
-        for (; ; ) {
+        do {
             System.out.println(usePrevResult ? "Enter an expression without leading space in this format: + b to use previous operation result." : "Enter an expression in this format: a + b.");
             expTmp = scanner.nextLine();
-            if (expTmp.equalsIgnoreCase(EXIT_CODE)) {
-                break;
-            }
-            exp = (usePrevResult) ? (result + " " + expTmp) : expTmp;
-            expressionChecker.setExpression(exp);
-            try {
-                if (!expressionChecker.checkExp()) {
-                    System.out.println("Invalid expression format.");
-                } else {
-                    doCalculate(exp);
-                    result = calculator.getResult();
-                    calculator.cleanResult();
-                    System.out.println("Result of expression: " + result);
-                    System.out.println("Do you want to use current result in next expression? (yes/no):");
-                    expTmp = scanner.nextLine();
-                    usePrevResult = expTmp.equalsIgnoreCase(USE_CURR_RESULT_CODE);
+            if (!expTmp.equalsIgnoreCase(EXIT_CODE)) {
+                exp = (usePrevResult) ? (result + " " + expTmp) : expTmp;
+                expressionChecker.setExpression(exp);
+                try {
+                    if (!expressionChecker.checkExp()) {
+                        System.out.println("Invalid expression format.");
+                    } else {
+                        calculator.cleanResult();
+                        doCalculate(exp);
+                        result = calculator.getResult();
+                        System.out.println("Result of expression: " + result);
+                        System.out.println("Do you want to use current result in next expression? (yes/no):");
+                        expTmp = scanner.nextLine();
+                        usePrevResult = expTmp.equalsIgnoreCase(USE_CURR_RESULT_CODE);
+                    }
+                } catch (PatternSyntaxException exc) {
+                    System.out.println(exc.getMessage());
                 }
-            } catch (PatternSyntaxException exc) {
-                System.out.println(exc.getMessage());
             }
-        }
+        } while (!expTmp.equalsIgnoreCase(EXIT_CODE));
     }
 
     public static void main(String[] args) {
