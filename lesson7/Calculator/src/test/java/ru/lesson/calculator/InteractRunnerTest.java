@@ -11,14 +11,14 @@ public class InteractRunnerTest {
         String s = "-100.2 / 25\nno\nexit";
         Scanner scanner = new Scanner(s);
         Calculator calculator = new Calculator();
-        new InteractRunner(scanner, calculator);
+        InteractRunner interactRunner = new InteractRunner(scanner, calculator);
+        interactRunner.runExec();
         Assert.assertEquals(calculator.getResult(), -4.008, 0);
     }
 
     @Test
     public void testDoCalculate() {
-        String s = "-1 * 25\nno\nexit";
-        Scanner scanner = new Scanner(s);
+        Scanner scanner = new Scanner(System.in);
         Calculator calculator = new Calculator();
         InteractRunner interactRunner = new InteractRunner(scanner, calculator);
         calculator.cleanResult();

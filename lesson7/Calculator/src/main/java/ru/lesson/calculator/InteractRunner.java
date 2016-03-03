@@ -36,7 +36,6 @@ public class InteractRunner {
         this.calculator = calculator;
         System.out.println("Type 'Exit' to stop the program.");
         System.out.println("Available operations are: +, -, *, /, pow.");
-        runExec();
     }
 
     /**
@@ -69,7 +68,7 @@ public class InteractRunner {
     /**
      * Запускает работу класса
      */
-    private void runExec() {
+    public void runExec() {
         String exp;
         String expTmp;
         boolean usePrevResult = false;
@@ -101,6 +100,7 @@ public class InteractRunner {
     }
 
     public static void main(String[] args) {
-        new InteractRunner(new Scanner(System.in), new Calculator());
+        InteractRunner interactRunner = new InteractRunner(new Scanner(System.in), new Calculator());
+        interactRunner.runExec();
     }
 }
