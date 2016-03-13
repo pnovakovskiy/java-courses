@@ -14,7 +14,7 @@ public class InteractRunner {
     /**
      * Печатает главное меню
      */
-    private void printMainMenu() {
+    public void printMainMenu() {
         System.out.println();
         System.out.println("Выберите действие:");
         System.out.println("1. Добавить клиента");
@@ -33,7 +33,7 @@ public class InteractRunner {
      * @param question String сообщение/вопрос пользователю
      * @return String ответ пользователя
      */
-    private String getUserWordAnswer(final String question) {
+    public String getUserWordAnswer(final String question) {
         System.out.println(question);
 
         String answer;
@@ -50,16 +50,15 @@ public class InteractRunner {
     /**
      * Конструктор класса
      */
-    public InteractRunner() {
-        scanner = new Scanner(System.in);
+    public InteractRunner(final Scanner scanner) {
+        this.scanner = scanner;
         clinic = new Clinic();
-        runExec();
     }
 
     /**
      * Запускает работу класса, иммитирующего клинику
      */
-    private void runExec() {
+    public void runExec() {
         int userChoice = 0;
         while (userChoice != 9) {
             printMainMenu();
@@ -105,7 +104,7 @@ public class InteractRunner {
     /**
      * Добавляет нового клиента
      */
-    private void addNewClientExec() {
+    public void addNewClientExec() {
         String id;
         Client client;
 
@@ -121,7 +120,7 @@ public class InteractRunner {
      * Создание нового домашнего питомца
      * @return Pet домашний питомец
      */
-    private Pet addNewPet() {
+    public Pet addNewPet() {
         String petKind = getUserWordAnswer("Какое домашнее животное необходимо добавить? (СОБАКА или КОШКА):");
         while (!petKind.equalsIgnoreCase("собака") && !petKind.equalsIgnoreCase("кошка")) {
             petKind = getUserWordAnswer("Неизвестное домашнее животное. Повторите попытку.");
@@ -143,7 +142,7 @@ public class InteractRunner {
     /**
      * Добавляет нового питомца к существующему клиенту
      */
-    private void addNewPetToClientExec() {
+    public void addNewPetToClientExec() {
         Client client = findClient();
 
         if (client == null) {
@@ -165,7 +164,7 @@ public class InteractRunner {
      * Ищет клиента по имени
      * @return Client клиент клиники
      */
-    private Client findClient() {
+    public Client findClient() {
         String clientName = getUserWordAnswer("Введите имя клиента:");
         return clinic.getClient(clientName);
     }
@@ -173,7 +172,7 @@ public class InteractRunner {
     /**
      * Запускает поиск клиента
      */
-    private void findClientExec() {
+    public void findClientExec() {
         Client client = findClient();
 
         if (client == null) {
@@ -192,7 +191,7 @@ public class InteractRunner {
     /**
      * Запускает поиск питомца
      */
-    private void findPetExec() {
+    public void findPetExec() {
         String petName = getUserWordAnswer("Введите кличку питомца:");
 
         for (Client client: clinic.getClients()) {
@@ -208,7 +207,7 @@ public class InteractRunner {
     /**
      * Меняет имя клиента
      */
-    private void changeClientNameExec() {
+    public void changeClientNameExec() {
         Client client = findClient();
 
         if (client == null) {
@@ -227,7 +226,7 @@ public class InteractRunner {
     /**
      * Меняет кличку питомцу
      */
-    private void changePetNameExec() {
+    public void changePetNameExec() {
         Client client = findClient();
 
         if (client == null) {
@@ -254,7 +253,7 @@ public class InteractRunner {
     /**
      * Удаляет клиента
      */
-    private void deleteClientExec() {
+    public void deleteClientExec() {
         Client client  = findClient();
 
         if (client == null) {
@@ -269,7 +268,7 @@ public class InteractRunner {
     /**
      * Удаляет питомца
      */
-    private void deletePetExec() {
+    public void deletePetExec() {
         Client client = findClient();
 
         if (client == null) {
@@ -290,6 +289,7 @@ public class InteractRunner {
     }
 
     public static void main(String[] args) {
-        new InteractRunner();
+        InteractRunner interactRunner = new InteractRunner(new Scanner(System.in));
+        interactRunner.runExec();
     }
 }
